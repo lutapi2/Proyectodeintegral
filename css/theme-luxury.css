@@ -1,0 +1,88 @@
+/* ==========================================================================
+   AQUA-METRIC LUXE - DESIGN SYSTEM
+   Director Científico: Lucas Tapia
+   Estética: Ultra-Limpio, Blanco Natural, Profesional con Acentos Vivos y Llamativos
+   ========================================================================== */
+
+:root {
+  /* Fondo principal puro y limpio */
+  --bg-main: #ffffff;
+  --bg-subtle: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fafafa;
+  --bg-input: #f1f5f9;
+
+  /* Bordes naturales y limpios (sin marcos pesados ni falsos relieves de IA) */
+  --border-hairline: #e2e8f0;
+  --border-focus: #0284c7;
+  --border-accent: #00b894;
+
+  /* Paleta cromática llamativa y viva */
+  --vivid-blue: #0284c7;        /* Azul océano brillante */
+  --vivid-cyan: #00cec9;        /* Cian agua cristalina */
+  --vivid-emerald: #059669;     /* Esmeralda ecológico vivo */
+  --vivid-amber: #d97706;      /* Oro ámbar vibrante */
+  --vivid-coral: #ef4444;       /* Coral / Alerta llamativa */
+  --vivid-purple: #7c3aed;      /* Púrpura dinámico */
+
+  /* Gradientes vivos para acentos */
+  --gradient-brand: linear-gradient(135deg, #0284c7 0%, #00cec9 100%);
+  --gradient-gold: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  --gradient-emerald: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --gradient-alert: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+
+  /* Tipografía ejecutiva de alta legibilidad */
+  --text-primary: #0f172a;      /* Azul pizarra casi negro, máxima nitidez */
+  --text-secondary: #334155;    /* Gris medio natural */
+  --text-muted: #64748b;        /* Gris suave para metadatos */
+  --text-faint: #94a3b8;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Sombras naturales y orgánicas (planas, sin efecto flotante artificial) */
+  --shadow-flat: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow-hover: 0 4px 12px rgba(15, 23, 42, 0.08);
+
+  /* Radios suaves */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base limpia y luminosa */
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar plano y pulcro */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-subtle);
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vivid-blue);
+}
+
+::selection {
+  background: rgba(2, 132, 199, 0.18);
+  color: #0369a1;
+}

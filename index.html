@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaStream Executive | Modelado de Contaminantes por Lucas Tapia</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- KaTeX para Renderizado Matemático LaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <link rel="stylesheet" href="css/theme-luxury.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+
+    <header class="executive-header">
+      <div class="brand-wrapper">
+        <div class="brand-crest">
+          <span>LT</span>
+        </div>
+        <div class="brand-text">
+          <h1>
+            AQUA-METRIC LUXE
+            <span class="author-badge"> &bull; </span>
+          </h1>
+          <p>Plataforma de Inteligencia Ambiental &bull; Modelado de Cálculo Integral en Fuentes Hídricas</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="telemetry-status">
+          <span class="pulse-dot"></span>
+          <span>TELEMETRÍA EN TIEMPO REAL</span>
+        </div>
+
+        <button id="btnAmbientAudio" class="ambient-toggle" title="Activar Sonido Fluvial Relajante">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+        </button>
+
+        <button id="btnOpenReport" class="btn-luxury">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Dossier Ejecutivo
+        </button>
+      </div>
+    </header>
+
+    <section class="hero-statement">
+      <div class="title-meta">
+        <span class="hero-tag">Módulo de Ingeniería Hidrológica &bull; Caso de Estudio 5</span>
+        <h2>Acumulación de Contaminantes en Fuentes Hídricas</h2>
+        <p>
+          Modelado formal de la masa total de un desecho vertido a un río a partir de una tasa de flujo de contaminante variable en el tiempo 
+          $R(t) = Q_c(t) \cdot C_c(t)$, resolviendo la acumulación mediante cálculo integral $M(t) = \int_0^t R(\tau)d\tau$ acoplado a la advección y dispersión fluvial.
+        </p>
+      </div>
+
+      <div class="integral-formula-badge">
+        <div class="formula-label">Ecuación Fundamental de Acumulación</div>
+        <div class="formula-math">$$M(t) = \int_{0}^{t} R(\tau) \, d\tau$$</div>
+      </div>
+    </section>
+
+    <!-- Baraja de Métricas KPI de Alta Dirección -->
+    <section class="kpi-deck">
+      <div class="kpi-card gold">
+        <div class="kpi-header">
+          <span class="kpi-title">Masa Total Vertida</span>
+          <div class="kpi-icon">⚖️</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpiTotalMass">0.0</span>
+          <span class="kpi-unit">kg</span>
+        </div>
+        <div class="kpi-footer">
+          <span>Integral acumulada $\int_0^T R(t)dt$</span>
+          <span class="kpi-status-tag tag-safe">Auditado</span>
+        </div>
+      </div>
+
+      <div class="kpi-card crimson">
+        <div class="kpi-header">
+          <span class="kpi-title">Tasa Pico de Descarga</span>
+          <div class="kpi-icon">⚡</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpiPeakRate">0.0</span>
+          <span class="kpi-unit">kg/h</span>
+        </div>
+        <div class="kpi-footer">
+          <span>Máximo caudal másico instantáneo</span>
+          <span class="kpi-status-tag tag-warn">Vigilancia</span>
+        </div>
+      </div>
+
+      <div class="kpi-card cyan">
+        <div class="kpi-header">
+          <span class="kpi-title">Masa en Tránsito Fluvial</span>
+          <div class="kpi-icon">🌊</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpiCurrentMass">0.0</span>
+          <span class="kpi-unit">kg</span>
+        </div>
+        <div class="kpi-footer">
+          <span>Acumulada al instante $t_{actual}$</span>
+          <span class="kpi-status-tag tag-safe">Dinámica</span>
+        </div>
+      </div>
+
+      <div class="kpi-card emerald">
+        <div class="kpi-header">
+          <span class="kpi-title">Índice Asimilativo Fluvial</span>
+          <div class="kpi-icon">🌿</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpiAssimScore">98%</span>
+          <span class="kpi-unit">ICA</span>
+        </div>
+        <div class="kpi-footer">
+          <span id="kpiAssimStatus" class="kpi-status-tag tag-safe">Cumplimiento Óptimo</span>
+          <span>Umbral 15 mg/L</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel Principal: Controles y Simulación -->
+    <div class="dashboard-grid">
+
+      <!-- Columna Izquierda: Parámetros y Escenarios -->
+      <aside class="glass-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <div>
+              <h3 class="panel-title">Parámetros de Entrada</h3>
+              <p class="panel-subtitle">Configuración del vertido y condiciones fluviales</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Escenarios Preconfigurados de la Industria -->
+        <div class="control-section">
+          <div class="control-section-title">
+            <span>Escenario Operativo</span>
+          </div>
+          <div class="scenario-pill-grid">
+            <button class="scenario-btn active" data-scenario="periodic">
+              <span class="scenario-name">Ciclo Diurno</span>
+              <span class="scenario-desc">Oscilación industrial sinusoidal</span>
+            </button>
+            <button class="scenario-btn" data-scenario="accidental_pulse">
+              <span class="scenario-name">Derrame Accidental</span>
+              <span class="scenario-desc">Pulso transitorio Gamma</span>
+            </button>
+            <button class="scenario-btn" data-scenario="ramp_valve">
+              <span class="scenario-name">Falla de Válvula</span>
+              <span class="scenario-desc">Crecimiento cuadrático</span>
+            </button>
+            <button class="scenario-btn" data-scenario="mitigated">
+              <span class="scenario-name">Mitigación Activa</span>
+              <span class="scenario-desc">Atenuación exponencial</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Controles Deslizantes del Vertido -->
+        <div class="control-section">
+          <div class="control-section-title">Dinámica de Descarga $R(t)$</div>
+
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <span class="slider-label">Tasa Base $R_0$ (Carga de Fondo)</span>
+              <span class="slider-val-badge" id="valR0">16.0 kg/h</span>
+            </div>
+            <input type="range" id="sliderR0" class="slider-input" min="0" max="60" step="0.5" value="16.0">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <span class="slider-label">Magnitud de Fluctuación $A$</span>
+              <span class="slider-val-badge" id="valParamA">12.0 kg/h</span>
+            </div>
+            <input type="range" id="sliderParamA" class="slider-input" min="0" max="50" step="0.5" value="12.0">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <span class="slider-label">Ventana de Auditoría $T_{total}$</span>
+              <span class="slider-val-badge" id="valTimeWindow">24 h</span>
+            </div>
+            <input type="range" id="sliderTimeWindow" class="slider-input" min="6" max="72" step="2" value="24">
+          </div>
+        </div>
+
+        <!-- Método de Integración Numérica -->
+        <div class="control-section">
+          <div class="control-section-title">Método de Cálculo Integral</div>
+
+          <div style="margin-bottom: 12px;">
+            <select id="selectMethod" class="luxury-select">
+              <option value="exact">Solución Analítica Exacta (Teorema Fundamental)</option>
+              <option value="simpson">Regla de Simpson 1/3 Compuesta (Orden $O(h^4)$)</option>
+              <option value="trapezoidal">Regla del Trapecio Compuesta (Orden $O(h^2)$)</option>
+              <option value="midpoint">Suma de Riemann (Punto Medio)</option>
+              <option value="riemann_left">Suma de Riemann (Extremo Izquierdo)</option>
+              <option value="riemann_right">Suma de Riemann (Extremo Derecho)</option>
+            </select>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <span class="slider-label">Subdivisiones de Integración ($n$)</span>
+              <span class="slider-val-badge" id="valSteps">24</span>
+            </div>
+            <input type="range" id="sliderSteps" class="slider-input" min="4" max="100" step="2" value="24">
+          </div>
+        </div>
+
+        <!-- Parámetros Fluviales -->
+        <div class="control-section">
+          <div class="control-section-title">Hidrodinámica del Río Receptor</div>
+
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <span class="slider-label">Caudal del Río $Q_{río}$</span>
+              <span class="slider-val-badge" id="valRiverFlow">50 m³/s</span>
+            </div>
+            <input type="range" id="sliderRiverFlow" class="slider-input" min="10" max="250" step="5" value="50">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <span class="slider-label">Velocidad Fluvial Media ($u$)</span>
+              <span class="slider-val-badge" id="valRiverSpeed">2.8 km/h</span>
+            </div>
+            <input type="range" id="sliderRiverSpeed" class="slider-input" min="0.5" max="8.0" step="0.1" value="2.8">
+          </div>
+        </div>
+      </aside>
+
+      <!-- Columna Derecha: Simulación Fluvial y Gráficos -->
+      <main>
+        
+        <!-- Visor Fluvial Interactivo 2D -->
+        <div class="river-viewport">
+          <div class="river-overlay-hud">
+            <div class="hud-pill">
+              <span style="color: var(--gold-light);">TIEMPO:</span>
+              <span id="hudSimTime" style="font-weight: 700; color: #fff;">0.0 h</span>
+              <span style="margin-left: 12px; color: var(--gold-light);">TASA $R(t)$:</span>
+              <span id="hudSimRate" style="font-weight: 700; color: var(--hydro-emerald);">16.0 kg/h</span>
+            </div>
+
+            <div style="display: flex; gap: 8px;">
+              <button id="btnPlayPause" class="btn-luxury-outline">
+                <span>⏸</span> Pausar
+              </button>
+              <button id="btnResetSim" class="btn-luxury-outline">
+                <span>↺</span> Reiniciar
+              </button>
+            </div>
+          </div>
+
+          <canvas id="riverCanvas" class="river-canvas"></canvas>
+
+          <div class="river-legend-bar">
+            <span>🔴 Origen Emisario Industrial (Punto de Descarga $x=0$)</span>
+            <div class="gradient-legend">
+              <span>Baja Dilución</span>
+              <div class="gradient-bar"></div>
+              <span>Alta Concentración</span>
+            </div>
+            <span>💡 Pasa el ratón por el cauce para colocar sondas de telemetría virtuales</span>
+          </div>
+        </div>
+
+        <!-- Gráficos de Instrumentación Dual -->
+        <div class="charts-grid">
+          
+          <!-- Gráfico 1: Tasa de Vertido -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">
+                <span class="chart-legend-indicator" style="background: var(--hydro-emerald);"></span>
+                Tasa de Vertido Instantánea $R(t)$ [kg/h]
+              </div>
+              <span style="font-size: 0.72rem; color: var(--gold-light); font-family: var(--font-mono);">Área = $\int R(t)dt$</span>
+            </div>
+            <canvas id="chartRateCanvas" class="chart-canvas"></canvas>
+          </div>
+
+          <!-- Gráfico 2: Masa Acumulada -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">
+                <span class="chart-legend-indicator" style="background: var(--hydro-cyan);"></span>
+                Masa Total Acumulada $M(t)$ [kg]
+              </div>
+              <span style="font-size: 0.72rem; color: var(--danger-crimson); font-family: var(--font-mono);">-- Límite Regulatorio</span>
+            </div>
+            <canvas id="chartMassCanvas" class="chart-canvas"></canvas>
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+
+    <!-- Sección de Rigor Científico y Comparativa de Métodos de Cálculo -->
+    <section class="math-section">
+      <div class="math-grid">
+        
+        <div class="math-card">
+          <h3>Fundamentación del Cálculo Integral</h3>
+          <p>
+            En ingeniería ambiental de fuentes hídricas, la masa total $M(t)$ vertida a un cuerpo receptor desde un instante inicial $t=0$ hasta un tiempo $T$ se determina a través del <strong>Teorema Fundamental del Cálculo</strong>:
+          </p>
+          <div class="equation-box">
+            $$M(T) = \int_{0}^{T} R(t) \, dt = \lim_{n \to \infty} \sum_{i=1}^{n} R(t_i^*) \, \Delta t$$
+          </div>
+          <p>
+            Donde la tasa másica instantánea es el producto del caudal del efluente contaminante por su concentración volumétrica: $R(t) = Q_c(t) \cdot C_c(t)$. Si el vertido responde a un ciclo industrial sinusoidal, la primitiva analítica se obtiene mediante integración directa:
+          </p>
+          <div class="equation-box">
+            $$\int [R_0 + A \sin(\omega t)] \, dt = R_0 t - \frac{A}{\omega} \cos(\omega t) + C$$
+          </div>
+          <p>
+            Río abajo, la evolución espaciotemporal de la concentración $C(x,t)$ se acopla a la <strong>Ecuación de Advección-Dispersión (ADE 1D)</strong> con decaimiento bioquímico de primer orden $k$:
+          </p>
+          <div class="equation-box">
+            $$\frac{\partial C}{\partial t} + u \frac{\partial C}{\partial x} = D_L \frac{\partial^2 C}{\partial x^2} - k C$$
+          </div>
+        </div>
+
+        <div class="math-card">
+          <h3>Auditoría de Métodos Numéricos & Error</h3>
+          <p>
+            Comparativa en tiempo real entre la solución analítica exacta y los métodos de discretización de Riemann, Trapecio y Simpson:
+          </p>
+
+          <table class="math-table">
+            <thead>
+              <tr>
+                <th>Métrica / Parámetro</th>
+                <th>Valor Computado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Método Seleccionado</td>
+                <td id="statIntMethod" class="numeric">Analítico Exacto</td>
+              </tr>
+              <tr>
+                <td>Subdivisiones ($n$)</td>
+                <td id="statIntSteps" class="numeric">24</td>
+              </tr>
+              <tr>
+                <td>Tamaño de Paso ($\Delta t$)</td>
+                <td id="statStepSize" class="numeric">1.000 h</td>
+              </tr>
+              <tr>
+                <td>Masa Exacta $\int R(t)dt$</td>
+                <td id="statExactMass" class="numeric">-- kg</td>
+              </tr>
+              <tr>
+                <td>Aproximación Numérica</td>
+                <td id="statNumMass" class="numeric">-- kg</td>
+              </tr>
+              <tr>
+                <td>Error Absoluto ($\epsilon_{abs}$)</td>
+                <td id="statAbsError" class="numeric">0.0000 kg</td>
+              </tr>
+              <tr>
+                <td>Error Relativo ($\epsilon_{rel}$)</td>
+                <td id="statRelError" class="numeric" style="color: var(--hydro-emerald); font-weight: 700;">0.0000 %</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 18px; font-size: 0.74rem; color: var(--text-dark-muted); line-height: 1.5;">
+            * La Regla de Simpson 1/3 aproxima arcos parabólicos con un residuo de orden $O(h^4)$, reduciendo el error numérico por órdenes de magnitud frente a las sumas rectangulares elementales de Riemann $O(h)$.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Modal de Dossier de Auditoría Ejecutiva -->
+  <div id="reportModalBackdrop" class="modal-backdrop">
+    <div class="report-modal">
+      <button id="btnCloseReport" class="report-close-btn">&times;</button>
+
+      <div class="dossier-header">
+        <div>
+          <div class="dossier-seal">HYDRO-LUXE EXECUTIVE DOSSIER</div>
+          <div style="font-size: 0.85rem; color: var(--gold-light); letter-spacing: 1px; font-family: var(--font-mono); margin-top: 4px;">
+            INFORME DE CUMPLIMIENTO HIDROLÓGICO & MODELADO INTEGRAL
+          </div>
+        </div>
+        <div class="dossier-meta">
+          <div>EXPEDIENTE: #HL-2026-05-LT</div>
+          <div id="dossierDate">Octubre 2026</div>
+          <div>ESTADO: CERTIFICADO</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <h4 style="font-family: var(--font-serif); color: var(--gold-light); font-size: 1.1rem; margin-bottom: 8px;">1. Resumen Ejecutivo del Caso</h4>
+        <p style="font-size: 0.86rem; color: var(--text-silver); line-height: 1.6;">
+          El presente informe certifica el modelado computacional de la masa acumulada de contaminante vertida a la fuente hídrica receptora, evaluado bajo el régimen de tasa variable $R(t)$ en la ventana de auditoría solicitada. Los resultados se integran con base en el Teorema Fundamental del Cálculo y modelos de advección fluvial continua.
+        </p>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <h4 style="font-family: var(--font-serif); color: var(--gold-light); font-size: 1.1rem; margin-bottom: 8px;">2. Telemetría y Métricas Certificadas</h4>
+        <table class="math-table" style="font-size: 0.85rem;">
+          <tbody>
+            <tr>
+              <td style="color: var(--text-muted);">Escenario Hidrodinámico</td>
+              <td id="dossierScenario" class="numeric" style="color: #fff; font-weight: 600;">--</td>
+            </tr>
+            <tr>
+              <td style="color: var(--text-muted);">Masa Total Acumulada $M_{total}$</td>
+              <td id="dossierTotalMass" class="numeric" style="color: var(--hydro-cyan); font-weight: 700;">--</td>
+            </tr>
+            <tr>
+              <td style="color: var(--text-muted);">Carga Másica Pico $R_{pico}$</td>
+              <td id="dossierPeakRate" class="numeric" style="color: var(--gold-light); font-weight: 700;">--</td>
+            </tr>
+            <tr>
+              <td style="color: var(--text-muted);">Índice de Calidad y Asimilación (ICA)</td>
+              <td id="dossierCompliance" class="numeric">--</td>
+            </tr>
+            <tr>
+              <td style="color: var(--text-muted);">Método de Cuadratura Numérica</td>
+              <td id="dossierMethod" class="numeric">--</td>
+            </tr>
+            <tr>
+              <td style="color: var(--text-muted);">Discrepancia Numérica Estimada</td>
+              <td id="dossierRelError" class="numeric" style="color: var(--hydro-emerald);">--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <h4 style="font-family: var(--font-serif); color: var(--gold-light); font-size: 1.1rem; margin-bottom: 8px;">3. Dictamen y Recomendaciones de Ingeniería</h4>
+        <p style="font-size: 0.84rem; color: var(--text-silver); line-height: 1.6;">
+          Se recomienda la implementación de un tanque de homogenización y retención dinámica antes del vertedero principal para amortiguar las fluctuaciones senoidales de descarga $A \sin(\omega t)$, asegurando que la concentración en las boyas sensoriales aguas abajo permanezca en todo momento dentro del límite regulatorio establecido.
+        </p>
+      </div>
+
+      <!-- Bloque de Firma Oficial -->
+      <div class="signature-block">
+        <div class="signature-box">
+          <div class="signature-name">Lucas Tapia</div>
+          <div class="signature-title">Director Científico &bull; Hydro-Environmental Modeling Lead</div>
+          <div style="font-size: 0.7rem; color: var(--gold-primary); font-family: var(--font-mono); margin-top: 4px;">
+            Firma Digital Certificada &bull; SHA-256: e89a2f7c04b...
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <button id="btnExportCSV" class="btn-luxury-outline">
+            📥 Descargar CSV
+          </button>
+          <button id="btnPrintReport" class="btn-luxury">
+            🖨️ Imprimir Dossier PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts de la Aplicación -->
+  <script src="js/math-engine.js"></script>
+  <script src="js/river-canvas.js"></script>
+  <script src="js/charts-luxury.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
