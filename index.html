@@ -17,6 +17,7 @@
 
   <link rel="stylesheet" href="css/theme-luxury.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/theme-monochrome.css">
 </head>
 <body>
 
@@ -143,6 +144,13 @@
     </section>
 
     <!-- Panel Principal: Controles y Simulación -->
+    <nav class="tab-navigation" role="tablist" aria-label="Secciones del módulo">
+      <button id="tabTheory" class="btn-luxury-outline" type="button" role="tab" aria-selected="true" aria-controls="panelTheory" tabindex="0">Marco Teórico</button>
+      <button id="tabSimulator" class="btn-luxury-outline" type="button" role="tab" aria-selected="false" aria-controls="panelSimulator" tabindex="-1">Simulador de Vertidos</button>
+      <button id="tabCharts" class="btn-luxury-outline" type="button" role="tab" aria-selected="false" aria-controls="panelCharts" tabindex="-1">Gráficos de Dispersión</button>
+    </nav>
+
+    <section id="panelSimulator" role="tabpanel" aria-labelledby="tabSimulator" hidden>
     <div class="dashboard-grid">
 
       <!-- Columna Izquierda: Parámetros y Escenarios -->
@@ -292,39 +300,116 @@
           </div>
         </div>
 
-        <!-- Gráficos de Instrumentación Dual -->
-        <div class="charts-grid">
-          
-          <!-- Gráfico 1: Tasa de Vertido -->
-          <div class="chart-card">
-            <div class="chart-header">
-              <div class="chart-title">
-                <span class="chart-legend-indicator" style="background: var(--hydro-emerald);"></span>
-                Tasa de Vertido Instantánea $R(t)$ [kg/h]
-              </div>
-              <span style="font-size: 0.72rem; color: var(--gold-light); font-family: var(--font-mono);">Área = $\int R(t)dt$</span>
-            </div>
-            <canvas id="chartRateCanvas" class="chart-canvas"></canvas>
-          </div>
-
-          <!-- Gráfico 2: Masa Acumulada -->
-          <div class="chart-card">
-            <div class="chart-header">
-              <div class="chart-title">
-                <span class="chart-legend-indicator" style="background: var(--hydro-cyan);"></span>
-                Masa Total Acumulada $M(t)$ [kg]
-              </div>
-              <span style="font-size: 0.72rem; color: var(--danger-crimson); font-family: var(--font-mono);">-- Límite Regulatorio</span>
-            </div>
-            <canvas id="chartMassCanvas" class="chart-canvas"></canvas>
-          </div>
-
-        </div>
-
       </main>
 
     </div>
 
+      <section class="math-grid" aria-labelledby="simulatorTitle">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <div>
+                <h3 id="simulatorTitle" class="panel-title">Simulador de Vertidos</h3>
+                <p class="panel-subtitle">Define el caudal, la concentración y el intervalo de integración</p>
+              </div>
+            </div>
+          </div>
+
+          <form id="spillForm" class="control-section">
+            <div class="slider-group">
+              <label class="slider-label-row" for="flowRange">
+                <span class="slider-label">Caudal de la fuente $Q_c$ (m³/h)</span>
+                <span class="slider-val-badge" id="flowValue">2.50 m³/h</span>
+              </label>
+              <input id="flowRange" class="slider-input" type="range" min="0.1" max="100" step="0.1" value="2.5" aria-label="Caudal de la fuente, rango">
+              <input id="flowInput" type="number" min="0.1" max="100" step="0.1" value="2.5" required aria-label="Caudal de la fuente en metros cúbicos por hora">
+            </div>
+
+            <div class="slider-group">
+              <label class="slider-label-row" for="concentrationRange">
+                <span class="slider-label">Concentración $C_c$ (mg/L)</span>
+                <span class="slider-val-badge" id="concentrationValue">20.0 mg/L</span>
+              </label>
+              <input id="concentrationRange" class="slider-input" type="range" min="0.1" max="500" step="0.1" value="20" aria-label="Concentración del contaminante, rango">
+              <input id="concentrationInput" type="number" min="0.1" max="500" step="0.1" value="20" required aria-label="Concentración del contaminante en miligramos por litro">
+            </div>
+
+            <div class="slider-group">
+              <label class="slider-label-row" for="timeRange">
+                <span class="slider-label">Tiempo de integración $t$ (h)</span>
+                <span class="slider-val-badge" id="timeValue">12.0 h</span>
+              </label>
+              <input id="timeRange" class="slider-input" type="range" min="0.1" max="168" step="0.1" value="12" aria-label="Tiempo de integración, rango">
+              <input id="timeInput" type="number" min="0.1" max="168" step="0.1" value="12" required aria-label="Tiempo de integración en horas">
+            </div>
+
+            <button class="btn-luxury" type="submit">Guardar escenario</button>
+          </form>
+        </div>
+
+        <div class="math-card" aria-live="polite">
+          <h3>Resolución paso a paso</h3>
+          <div id="simStepByStep" class="equation-box"></div>
+          <p>Masa acumulada: <strong id="simMassResult">0.600 kg</strong></p>
+        </div>
+      </section>
+
+      <section class="math-card" aria-labelledby="historyTitle">
+        <h3 id="historyTitle">Históricos de escenarios</h3>
+        <table class="math-table">
+          <thead>
+            <tr>
+              <th>Escenario</th>
+              <th>$Q_c$ (m³/h)</th>
+              <th>$C_c$ (mg/L)</th>
+              <th>$t$ (h)</th>
+              <th>$M(t)$ (kg)</th>
+            </tr>
+          </thead>
+          <tbody id="scenarioHistory">
+            <tr><td colspan="5">Aún no se han guardado escenarios.</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+
+    <section id="panelCharts" role="tabpanel" aria-labelledby="tabCharts" hidden>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">
+              <span class="chart-legend-indicator" style="background: var(--hydro-emerald);"></span>
+              Tasa de Vertido Instantánea $R(t)$ [kg/h]
+            </div>
+            <span style="font-size: 0.72rem; color: var(--gold-light); font-family: var(--font-mono);">Área = $\int R(t)dt$</span>
+          </div>
+          <canvas id="chartRateCanvas" class="chart-canvas"></canvas>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">
+              <span class="chart-legend-indicator" style="background: var(--hydro-cyan);"></span>
+              Masa Total Acumulada $M(t)$ [kg]
+            </div>
+            <span style="font-size: 0.72rem; color: var(--danger-crimson); font-family: var(--font-mono);">-- Límite Regulatorio</span>
+          </div>
+          <canvas id="chartMassCanvas" class="chart-canvas"></canvas>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">Acumulación en el escenario actual $M(t)$</div>
+            <span id="spillChartSummary">Caudal másico constante</span>
+          </div>
+          <div class="chart-plot-area">
+            <canvas id="spillMassChart" role="img" aria-label="Gráfico de masa acumulada de contaminante en el tiempo"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panelTheory" role="tabpanel" aria-labelledby="tabTheory">
     <!-- Sección de Rigor Científico y Comparativa de Métodos de Cálculo -->
     <section class="math-section">
       <div class="math-grid">
@@ -402,6 +487,7 @@
         </div>
 
       </div>
+    </section>
     </section>
 
   </div>
@@ -498,5 +584,7 @@
   <script src="js/river-canvas.js"></script>
   <script src="js/charts-luxury.js"></script>
   <script src="js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="js/dashboard-simulator.js"></script>
 </body>
 </html>

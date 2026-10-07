@@ -89,8 +89,8 @@ class LuxuryChartEngine {
     ctx.closePath();
 
     const areaGrad = ctx.createLinearGradient(0, padTop, 0, padTop + plotH);
-    areaGrad.addColorStop(0, 'rgba(5, 150, 105, 0.22)');
-    areaGrad.addColorStop(1, 'rgba(5, 150, 105, 0.02)');
+    areaGrad.addColorStop(0, 'rgba(140, 133, 120, 0.22)');
+    areaGrad.addColorStop(1, 'rgba(140, 133, 120, 0.02)');
     ctx.fillStyle = areaGrad;
     ctx.fill();
     ctx.restore();
@@ -99,7 +99,7 @@ class LuxuryChartEngine {
     ctx.save();
     ctx.beginPath();
     ctx.lineWidth = 2.8;
-    ctx.strokeStyle = '#059669';
+    ctx.strokeStyle = '#393832';
     for (let i = 0; i <= sampleCount; i++) {
       const t = (i / sampleCount) * tMax;
       const r = window.HydroMath.evaluateDischargeRate(t, params);
@@ -119,7 +119,7 @@ class LuxuryChartEngine {
 
       ctx.save();
       ctx.setLineDash([4, 4]);
-      ctx.strokeStyle = '#0284c7';
+      ctx.strokeStyle = '#706959';
       ctx.lineWidth = 1.6;
       ctx.beginPath();
       ctx.moveTo(curX, padTop);
@@ -127,12 +127,12 @@ class LuxuryChartEngine {
       ctx.stroke();
 
       ctx.setLineDash([]);
-      ctx.fillStyle = '#0284c7';
+      ctx.fillStyle = '#171715';
       ctx.beginPath();
       ctx.arc(curX, curY, 5, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = '#0369a1';
+      ctx.fillStyle = '#393832';
       ctx.font = 'bold 10px JetBrains Mono, monospace';
       ctx.fillText(`${curR.toFixed(1)} kg/h`, curX + 8, Math.max(padTop + 14, curY - 6));
       ctx.restore();
@@ -173,7 +173,7 @@ class LuxuryChartEngine {
     const threshY = toScreenY(regThresholdKg);
     if (threshY >= padTop && threshY <= padTop + plotH) {
       ctx.save();
-      ctx.strokeStyle = '#ef4444';
+      ctx.strokeStyle = '#8c8578';
       ctx.lineWidth = 1.6;
       ctx.setLineDash([5, 4]);
       ctx.beginPath();
@@ -181,7 +181,7 @@ class LuxuryChartEngine {
       ctx.lineTo(padLeft + plotW, threshY);
       ctx.stroke();
 
-      ctx.fillStyle = '#dc2626';
+      ctx.fillStyle = '#625d55';
       ctx.font = 'bold 9px JetBrains Mono, monospace';
       ctx.fillText(`LÍMITE AMBIENTAL (${regThresholdKg.toFixed(0)} kg)`, padLeft + 10, threshY - 6);
       ctx.restore();
@@ -202,14 +202,14 @@ class LuxuryChartEngine {
     ctx.closePath();
 
     const massGrad = ctx.createLinearGradient(0, padTop, 0, padTop + plotH);
-    massGrad.addColorStop(0, 'rgba(2, 132, 199, 0.22)');
-    massGrad.addColorStop(1, 'rgba(2, 132, 199, 0.02)');
+    massGrad.addColorStop(0, 'rgba(140, 133, 120, 0.22)');
+    massGrad.addColorStop(1, 'rgba(140, 133, 120, 0.02)');
     ctx.fillStyle = massGrad;
     ctx.fill();
 
     ctx.beginPath();
     ctx.lineWidth = 2.8;
-    ctx.strokeStyle = '#0284c7';
+    ctx.strokeStyle = '#171715';
     for (let i = 0; i <= sampleCount; i++) {
       const t = (i / sampleCount) * tMax;
       const m = window.HydroMath.computeExactAccumulation(t, params);
@@ -229,7 +229,7 @@ class LuxuryChartEngine {
 
       ctx.save();
       ctx.setLineDash([4, 4]);
-      ctx.strokeStyle = '#0f172a';
+      ctx.strokeStyle = '#625d55';
       ctx.lineWidth = 1.4;
       ctx.beginPath();
       ctx.moveTo(curX, padTop);
@@ -237,7 +237,7 @@ class LuxuryChartEngine {
       ctx.stroke();
 
       ctx.setLineDash([]);
-      ctx.fillStyle = '#0284c7';
+      ctx.fillStyle = '#171715';
       ctx.strokeStyle = '#ffffff';
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -245,7 +245,7 @@ class LuxuryChartEngine {
       ctx.fill();
       ctx.stroke();
 
-      ctx.fillStyle = '#0369a1';
+      ctx.fillStyle = '#393832';
       ctx.font = 'bold 10px JetBrains Mono, monospace';
       ctx.fillText(`${curM.toFixed(1)} kg`, curX + 8, Math.max(padTop + 14, curY - 6));
       ctx.restore();
@@ -254,9 +254,9 @@ class LuxuryChartEngine {
 
   drawGridAndAxes(ctx, x0, y0, w, h, xMax, yMax, xUnit, yUnit) {
     ctx.save();
-    ctx.strokeStyle = '#e2e8f0';
+    ctx.strokeStyle = '#e1ddd3';
     ctx.lineWidth = 1;
-    ctx.fillStyle = '#64748b';
+    ctx.fillStyle = '#706d65';
     ctx.font = '9px JetBrains Mono, monospace';
 
     // Líneas horizontales
@@ -301,8 +301,8 @@ class LuxuryChartEngine {
         const x2 = toScreenX(s.x2);
         const y2 = toScreenY(s.y2);
 
-        ctx.fillStyle = 'rgba(2, 132, 199, 0.12)';
-        ctx.strokeStyle = '#0284c7';
+        ctx.fillStyle = 'rgba(140, 133, 120, 0.12)';
+        ctx.strokeStyle = '#706959';
         ctx.beginPath();
         ctx.moveTo(x1, baseScreenY);
         ctx.lineTo(x1, y1);
@@ -317,8 +317,8 @@ class LuxuryChartEngine {
         const sy = toScreenY(s.h);
         const sh = baseScreenY - sy;
 
-        ctx.fillStyle = 'rgba(2, 132, 199, 0.12)';
-        ctx.strokeStyle = '#0284c7';
+        ctx.fillStyle = 'rgba(140, 133, 120, 0.12)';
+        ctx.strokeStyle = '#706959';
         ctx.fillRect(sx, sy, sw, sh);
         ctx.strokeRect(sx, sy, sw, sh);
       }

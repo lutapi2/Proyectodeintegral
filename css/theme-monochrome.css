@@ -1,0 +1,287 @@
+/* Palette and interaction overrides inspired by the black, ivory, and white reference. */
+:root {
+  --bg-main: #f1eee6;
+  --bg-subtle: #e8e4da;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8f6f0;
+  --bg-input: #f6f3eb;
+  --border-hairline: #d5d0c5;
+  --border-focus: #171715;
+  --border-accent: #8c8578;
+  --vivid-blue: #171715;
+  --vivid-cyan: #8c8578;
+  --vivid-emerald: #393832;
+  --vivid-amber: #706959;
+  --vivid-coral: #625d55;
+  --vivid-purple: #625d55;
+  --gradient-brand: linear-gradient(135deg, #171715, #403e38);
+  --gradient-gold: linear-gradient(135deg, #b8ad98, #706959);
+  --gradient-emerald: linear-gradient(135deg, #a9a293, #393832);
+  --gradient-alert: linear-gradient(135deg, #8c8578, #393832);
+  --text-primary: #171715;
+  --text-secondary: #393832;
+  --text-muted: #706d65;
+  --text-faint: #969187;
+  --hydro-emerald: #393832;
+  --hydro-cyan: #706959;
+  --gold-light: #706959;
+  --gold-primary: #706959;
+  --danger-crimson: #625d55;
+  --text-dark-muted: #706d65;
+  --text-silver: #ded9ce;
+  --shadow-flat: 0 1px 3px rgba(32, 30, 25, 0.07);
+  --shadow-hover: 0 5px 16px rgba(32, 30, 25, 0.13);
+}
+
+body {
+  background-color: var(--bg-main);
+}
+
+.app-container {
+  background: transparent;
+}
+
+.executive-header,
+.hero-statement,
+.kpi-card,
+.glass-panel,
+.chart-card,
+.math-section,
+.report-modal {
+  border-color: var(--border-hairline);
+  box-shadow: var(--shadow-flat);
+}
+
+.executive-header {
+  background: #fff;
+  border-bottom-color: var(--border-hairline);
+}
+
+.author-badge {
+  border-color: #d5d0c5;
+  background: #f4f0e6;
+  color: #393832;
+}
+
+.telemetry-status {
+  border-color: #c9c3b7;
+  background: #f4f0e6;
+  color: #393832;
+}
+
+.pulse-dot {
+  background: #393832;
+  box-shadow: 0 0 0 3px rgba(140, 133, 120, 0.16);
+}
+
+.brand-crest,
+.btn-luxury,
+.math-section::before {
+  background: #171715;
+  border-color: #171715;
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(23, 23, 21, 0.18);
+}
+
+.btn-luxury:hover,
+.btn-luxury:focus-visible {
+  background: #393832;
+  border-color: #393832;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(23, 23, 21, 0.22);
+}
+
+.btn-luxury-outline,
+.scenario-btn,
+.ambient-toggle,
+.report-close-btn {
+  border: 1px solid #8a867c;
+  background: #f4f0e6;
+  color: #24231f;
+  box-shadow: 0 1px 2px rgba(23, 23, 21, 0.1);
+}
+
+.btn-luxury-outline:hover,
+.btn-luxury-outline:focus-visible,
+.scenario-btn:hover,
+.ambient-toggle:hover,
+.report-close-btn:hover {
+  border-color: #171715;
+  background: #e9e4d9;
+  color: #171715;
+}
+
+button {
+  font: inherit;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #8c8578;
+  outline-offset: 2px;
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.tab-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 22px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.tab-navigation [role="tab"] {
+  min-height: 42px;
+  padding: 9px 18px;
+  border: 1px solid #8a867c;
+  border-bottom-width: 2px;
+  background: #fff;
+  color: #393832;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(23, 23, 21, 0.1);
+}
+
+.tab-navigation [role="tab"][aria-selected="true"] {
+  border-color: #171715;
+  background: #171715;
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(23, 23, 21, 0.22);
+}
+
+.scenario-btn.active {
+  background: #e9e4d9;
+  border-color: #393832;
+  box-shadow: inset 3px 0 #171715;
+}
+
+.scenario-btn.active .scenario-name,
+.math-card h3,
+.hero-tag,
+.integral-formula-badge .formula-label,
+.control-section-title,
+.slider-val-badge {
+  color: #393832;
+}
+
+.scenario-btn.active .scenario-desc {
+  color: #625f57;
+}
+
+.slider-val-badge {
+  background: #f4f0e6;
+  border-color: #d5d0c5;
+}
+
+.slider-input {
+  background: #d5d0c5;
+  accent-color: #171715;
+}
+
+.slider-input::-webkit-slider-thumb {
+  background: #171715;
+  border-color: #fff;
+  box-shadow: 0 0 0 1px #171715;
+}
+
+.slider-input::-moz-range-thumb {
+  background: #171715;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px #171715;
+}
+
+.luxury-select,
+input[type="number"] {
+  border: 1px solid #aaa497;
+  border-radius: 4px;
+  background: #fff;
+  color: #171715;
+}
+
+.luxury-select:focus,
+input[type="number"]:focus {
+  border-color: #171715;
+  box-shadow: 0 0 0 3px rgba(23, 23, 21, 0.12);
+}
+
+.math-card,
+.integral-formula-badge,
+.equation-box,
+.math-table th {
+  background: #f4f0e6;
+  border-color: #d5d0c5;
+}
+
+.math-table th,
+.math-table td {
+  border-bottom-color: #ded9ce;
+}
+
+.tag-safe,
+.tag-warn,
+.tag-danger {
+  background: #f4f0e6;
+  border-color: #c9c3b7;
+  color: #393832;
+}
+
+.river-viewport {
+  border-color: #393832;
+}
+
+.gradient-bar {
+  background: linear-gradient(90deg, #e5e0d5 0%, #8c8578 55%, #171715 100%);
+}
+
+::selection {
+  background: rgba(140, 133, 120, 0.24);
+  color: #171715;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #706959;
+}
+
+.chart-plot-area {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  min-height: 260px;
+}
+
+.chart-plot-area canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-card {
+  min-width: 0;
+}
+
+#panelCharts .chart-card:last-child {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+  .tab-navigation {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .tab-navigation [role="tab"] {
+    justify-content: flex-start;
+  }
+
+  .chart-plot-area {
+    height: 260px;
+  }
+}
